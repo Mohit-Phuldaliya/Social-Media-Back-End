@@ -1,6 +1,11 @@
 const express = require("express");
+const cookieParser = require("cookie-parser");
 const app = express();
 const port = 8000;
+
+app.use(express.urlencoded()); // reading through the post request
+
+app.use(cookieParser()); // setting up the cookie parser
 
 // use express router
 app.use("/", require("./routes/index"));
