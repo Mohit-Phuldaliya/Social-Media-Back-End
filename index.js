@@ -1,7 +1,10 @@
 const express = require("express");
 const cookieParser = require("cookie-parser");
-const app = express();
 const port = 8000;
+
+const db = require("./config/mongoose");
+
+const app = express();
 
 app.use(express.urlencoded()); // reading through the post request
 
