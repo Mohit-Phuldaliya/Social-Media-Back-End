@@ -2,7 +2,9 @@ const express = require("express");
 const cookieParser = require("cookie-parser");
 const port = 8000;
 
+// connection DB
 const db = require("./config/mongoose");
+// const User = require("./models/user");
 
 const app = express();
 

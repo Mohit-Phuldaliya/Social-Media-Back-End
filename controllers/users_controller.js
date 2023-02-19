@@ -29,7 +29,7 @@ module.exports.create = function (req, res) {
   // try to find out the user id if it is exist then we does not create it and if it is does not exist then we create it
   User.findOne({ name: req.body.name }, function (err, user) {
     if (err) {
-      console.log("Error in finding user in signing up'");
+      console.log("Error in finding user in signing up' ");
       return;
     }
     if (!user) {
@@ -42,7 +42,7 @@ module.exports.create = function (req, res) {
       });
     } else {
       //when user is already present
-      return req.redirect("back");
+      return res.redirect("back");
     }
   });
 };
