@@ -1,7 +1,20 @@
 const User = require("../models/user");
 
 module.exports.profile = function (req, res) {
-  return res.end("<h1>User Profile</h1>");
+  if (req.cookies.user_id) {
+    User.findById(req.cookies.user_id, function (err, user) {
+      if (user) {
+        return res.render("user_profile", {
+          title: "User Profile",
+          user: user,
+        });
+      } else {
+        return res.redirect("/users/sign-in");
+      }
+    });
+  } else {
+    return res.redirect("/users/sign-in");
+  }
 };
 // now this is ready to access by router now that route need to be accessed by my browser
 
@@ -27,7 +40,7 @@ module.exports.create = function (req, res) {
   }
 
   // try to find out the user id if it is exist then we does not create it and if it is does not exist then we create it
-  User.findOne({ name: req.body.name }, function (err, user) {
+  User.findOne({ email: req.body.email }, function (err, user) {
     if (err) {
       console.log("Error in finding user in signing up' ");
       return;
@@ -52,5 +65,26 @@ module.exports.create = function (req, res) {
 
 // sign in and create the session for the user
 module.exports.createSession = function (req, res) {
-  // to do
+  // we r going to check wther the user exist if user exist we check wether the password enter is correct by using the user email and password enter in the form to the DB if those two email and password matches then we store the user identity in the COOKIE and send it of to the browser
+  // find the user
+  User.findOne({ email: req.body.email }, function (err, user) {
+    if (err) {
+      console.log("Error in finding user in signing in ");
+      return;
+    }
+
+    // handle user found
+    if (user) {
+      // handle password which doesn't match
+      if (user.password != req.body.password) {
+        return res.redirect("back");
+      }
+      // handle session creation
+      res.cookie("user_id", user.id);
+      return res.redirect("/users/profile");
+    } else {
+      // handle user not found
+      return res.redirect("back");
+    }
+  });
 };
