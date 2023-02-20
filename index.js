@@ -40,6 +40,9 @@ app.use(passport.initialize());
 app.use(passport.session()); //passport also helps in maintaining sessions
 // above also included in middleware for session cookie
 
+//set up the user uses
+app.use(passport.setAuthenticatedUser);
+
 //
 // use express router
 app.use("/", require("./routes/index"));

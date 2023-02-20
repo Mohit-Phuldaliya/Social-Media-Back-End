@@ -1,22 +1,32 @@
 const User = require("../models/user");
 
-module.exports.profile = function (req, res) {
-  if (req.cookies.user_id) {
-    User.findById(req.cookies.user_id, function (err, user) {
-      if (user) {
-        return res.render("user_profile", {
-          title: "User Profile",
-          user: user,
-        });
-      } else {
-        return res.redirect("/users/sign-in");
-      }
-    });
-  } else {
-    return res.redirect("/users/sign-in");
-  }
-};
+// // ****** MANUAL AUTHENTICATION PROFILE PAGE RENDERING ****////
+// module.exports.profile = function (req, res) {
+//   if (req.cookies.user_id) {
+//     User.findById(req.cookies.user_id, function (err, user) {
+//       if (user) {
+//         return res.render("user_profile", {
+//           title: "User Profile",
+//           user: user,
+//         });
+//       } else {
+//         return res.redirect("/users/sign-in");
+//       }
+//     });
+//   } else {
+//     return res.redirect("/users/sign-in");
+//   }
+// };
 // now this is ready to access by router now that route need to be accessed by my browser
+
+// ****** PASSPORTJS AUTHENTICATION PROFILE PAGE RENDERING ****////
+module.exports.profile = function (req, res) {
+  return res.render("user_profile", {
+    title: "User Profile",
+    name: "John Doe",
+    email: "john@example.com",
+  });
+};
 
 // render the sign up page
 module.exports.signUp = function (req, res) {

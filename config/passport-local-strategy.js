@@ -51,5 +51,27 @@ passport.deserializeUser(function (id, done) {
   });
 });
 
+//****sending data of the signed in current user to the views
+
+//check if the user is authenticated
+passport.checkAuthentication = function (req, res, next) {
+  // isAuthenticated() this is a passport method used on request to check if the user is authenticated or not or signed in or not
+  if (req.isAuthenticated()) {
+    // if the user is signed in, then pass on the request to the next function which is my controller's action
+    return next();
+  }
+  //if user is not signed in
+  return res.redirect("/users/sign-in");
+};
+
+// set the user for the views
+passport.setAuthenticatedUser = function (req, res, next) {
+  if (req.isAuthenticated()) {
+    // whenever a user is signed-in that current user's information is avialable in req.user from the session cookie (bcz i used the user model so req.user is already handled by passport ) and we are just sending this to the locals for the views
+    res.locals.user = req.user;
+  }
+  next();
+};
+
 // not exporting the passport local strategy we exporting the passport
 module.exports = passport;
