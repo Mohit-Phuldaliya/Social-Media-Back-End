@@ -7,6 +7,13 @@ const expressLayouts = require("express-ejs-layouts");
 // telling app to use layouts
 app.use(expressLayouts);
 
+// extract style and scripts from sub pages into the layout
+app.set("layout extractStyles", true);
+app.set("layout extractScripts", true);
+
+// need to tell in which folder app should look for static file
+app.use(express.static("./assets"));
+
 // connection DB
 const db = require("./config/mongoose");
 
