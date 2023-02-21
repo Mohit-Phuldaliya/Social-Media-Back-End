@@ -1,6 +1,11 @@
 const express = require("express");
 const cookieParser = require("cookie-parser");
+const app = express();
 const port = 8000;
+
+const expressLayouts = require("express-ejs-layouts");
+// telling app to use layouts
+app.use(expressLayouts);
 
 // connection DB
 const db = require("./config/mongoose");
@@ -9,8 +14,6 @@ const db = require("./config/mongoose");
 const session = require("express-session");
 const passport = require("passport");
 const passportLocal = require("./config/passport-local-strategy");
-
-const app = express();
 
 //setting mongo-store it reequires an argument session (express session) bcz u need to store the session information in the
 // const MongoStore = require("connect-mongo")(session);
