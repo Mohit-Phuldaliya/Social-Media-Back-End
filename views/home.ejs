@@ -27,6 +27,20 @@
           <small> <%= post.user.name %> </small>
           <!--now it shows me name of the user from user object-->
         </p>
+        <div class="post-comments">
+          <% if(locals.user){ %>
+          <form action="/comments/create" method="POST">
+            <input
+              type="text"
+              name="content"
+              placeholder="Type here to add comment..."
+            />
+            <!-- we need to send the id of the post to which comments needs to be added-->
+            <input type="hidden" name="post" value="<%= post._id %>" />
+            <input type="submit" value="Add Comment" />
+          </form>
+          <%} %>
+        </div>
       </li>
       <% } %>
     </ul>

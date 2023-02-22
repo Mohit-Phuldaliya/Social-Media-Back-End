@@ -4,7 +4,7 @@ const commentSchema = new mongoose.Schema(
   {
     content: {
       type: String,
-      require: ture,
+      require: true,
     },
     // comment belong to a user
     user: {
