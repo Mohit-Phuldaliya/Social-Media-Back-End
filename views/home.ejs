@@ -1,4 +1,4 @@
-<h1>Social/<%= title %></h1>
+<h1><%= title %></h1>
 
 <section id="feed-posts">
   <h4>Post</h4>
@@ -11,4 +11,22 @@
     ></textarea>
     <input type="submit" value="Post" />
   </form>
+  <div id="posts-list-container">
+    <ul>
+      <% for(post of posts){ %>
+      <li>
+        <p>
+          <%= post.content %>
+          <br />
+          <!--  -->
+          <!-- <small> <%= post.user %> </small> -->
+          <!-- the above shows me the user id when we don't populate after populating it shows me whole user object-->
+          <!--  -->
+          <small> <%= post.user.name %> </small>
+          <!--now it shows me name of the user from user object-->
+        </p>
+      </li>
+      <% } %>
+    </ul>
+  </div>
 </section>
