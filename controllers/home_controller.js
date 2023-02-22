@@ -1,4 +1,5 @@
 const Post = require("../models/post");
+const User = require("../models/user");
 
 module.exports.home = function (req, res) {
   // console.log(req.cookies);
@@ -29,10 +30,15 @@ module.exports.home = function (req, res) {
     }) //populatin for showing comments and author of comment
     // we use .exec() to write our callback function
     .exec(function (err, posts) {
-      return res.render("home", {
-        title: "SocialMedia Home",
-        //passing all posts in home views
-        posts: posts,
+      // finding all users
+      User.find({}, function (err, users) {
+        return res.render("home", {
+          title: "SocialMedia Home",
+          //passing all posts in home views
+          posts: posts,
+          //passing all users in home views
+          all_users: users,
+        });
       });
     });
 };

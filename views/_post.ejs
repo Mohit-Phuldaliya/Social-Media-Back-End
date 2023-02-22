@@ -1,0 +1,36 @@
+<li>
+  <p>
+    <% if(locals.user && locals.user.id == post.user.id){ %>
+    <small>
+      <a href="/posts/destroy/<%= post.id %>">deleButton</a>
+    </small>
+    <%}%> <%= post.content %>
+    <br />
+    <!--  -->
+    <!-- <small> <%= post.user %> </small> -->
+    <!-- the above shows me the user id when we don't populate after populating it shows me whole user object-->
+    <!--  -->
+    <small> <%= post.user.name %> </small>
+    <!--now it shows me name of the user from user object-->
+  </p>
+  <div class="post-comments">
+    <% if(locals.user){ %>
+    <form action="/comments/create" method="POST">
+      <input
+        type="text"
+        name="content"
+        placeholder="Type here to add comment..."
+        required
+      />
+      <!-- we need to send the id of the post to which comments needs to be added-->
+      <input type="hidden" name="post" value="<%= post._id %>" />
+      <input type="submit" value="Add Comment" />
+    </form>
+    <%} %>
+    <div class="post-comment-list">
+      <ul id="post-comments-<%= post._id%>">
+        <% for(comment of post.comments) {%> <%- include('_comment') -%> <%}%>
+      </ul>
+    </div>
+  </div>
+</li>

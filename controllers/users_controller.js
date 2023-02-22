@@ -21,11 +21,23 @@ const User = require("../models/user");
 
 // ****** PASSPORTJS AUTHENTICATION PROFILE PAGE RENDERING ****////
 module.exports.profile = function (req, res) {
-  return res.render("user_profile", {
-    title: "User Profile",
-    name: "John Doe",
-    email: "john@example.com",
+  User.findById(req.params.id, function (err, user) {
+    return res.render("user_profile", {
+      title: "User Profile",
+      profile_user: user,
+    });
   });
+};
+//profile update form
+module.exports.update = function (req, res) {
+  if (req.user.id == req.params.id) {
+    // {name: req.body.name,email: req.body.email} == req.body
+    User.findByIdAndUpdate(req.params.id, req.body, function (err, user) {
+      return res.redirect("back");
+    });
+  } else {
+    return res.status(401).send("Unauthorized");
+  }
 };
 
 // render the sign up page

@@ -16,56 +16,17 @@
   <%}%>
   <div id="posts-list-container">
     <ul>
-      <% for(post of posts){ %>
-      <li>
-        <p>
-          <% if(locals.user && locals.user.id == post.user.id){ %>
-          <small>
-            <a href="/posts/destroy/<%= post.id %>">deleButton</a>
-          </small>
-          <%}%> <%= post.content %>
-          <br />
-          <!--  -->
-          <!-- <small> <%= post.user %> </small> -->
-          <!-- the above shows me the user id when we don't populate after populating it shows me whole user object-->
-          <!--  -->
-          <small> <%= post.user.name %> </small>
-          <!--now it shows me name of the user from user object-->
-        </p>
-        <div class="post-comments">
-          <% if(locals.user){ %>
-          <form action="/comments/create" method="POST">
-            <input
-              type="text"
-              name="content"
-              placeholder="Type here to add comment..."
-              required
-            />
-            <!-- we need to send the id of the post to which comments needs to be added-->
-            <input type="hidden" name="post" value="<%= post._id %>" />
-            <input type="submit" value="Add Comment" />
-          </form>
-          <%} %>
-          <div class="post-comment-list">
-            <ul id="post-comments-<%= post._id%>">
-              <% for(comment of post.comments) {%>
-              <p>
-                <% if(locals.user && locals.user.id == comment.user.id){ %>
-                <small>
-                  <a href="/comments/destroy/<%= comment.id %>"
-                    >deletecomment</a
-                  >
-                </small>
-                <%}%> <%= comment.content %>
-                <br />
-                <small> <%= comment.user.name %> </small>
-              </p>
-              <%}%>
-            </ul>
-          </div>
-        </div>
-      </li>
-      <% } %>
+      <% for(post of posts){ %> <%- include('_post') -%> <% } %>
     </ul>
   </div>
+</section>
+
+<section id="users-freinds">
+  <h4>Friends</h4>
+  <% for(u of all_users) {%>
+  <p>
+    <a href="/users/profile/<%= u.id%>"><%= u.name%></a>
+    <!-- a taged linked to the profile of the user -->
+  </p>
+  <%}%>
 </section>
