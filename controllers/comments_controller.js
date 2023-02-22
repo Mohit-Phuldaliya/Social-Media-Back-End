@@ -16,7 +16,7 @@ module.exports.create = function (req, res) {
           if (err) {
             console.log("error in commenting");
           }
-          // if commented get created now adding comment to the post means addi ng comment to the postSchema in comment array
+          // if commente get created now adding comment to the post means addi ng comment to the postSchema in comment array
           // we Updating array or comments in postSchema
           post.comments.push(comment); //given by mongoDB
           //whenever i updating something i need to call save after it

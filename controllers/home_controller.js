@@ -18,9 +18,16 @@ module.exports.home = function (req, res) {
   // });
   ///
 
-  //fetching all post with user object by populating whole user from database using method populated provided by mongoose we use .exec() to write our callback function
   Post.find({})
-    .populate("user")
+    .populate("user") //fetching all post with user object by populating whole user from database using method populated provided by mongoose
+    .populate({
+      path: "comments",
+      populate: {
+        // futher populate
+        path: "user",
+      },
+    }) //populatin for showing comments and author of comment
+    // we use .exec() to write our callback function
     .exec(function (err, posts) {
       return res.render("home", {
         title: "SocialMedia Home",
