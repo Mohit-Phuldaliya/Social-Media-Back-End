@@ -126,6 +126,9 @@ module.exports.create = function (req, res) {
 // ***** Authentication Using Passport ****
 
 module.exports.createSession = function (req, res) {
+  // setting up flash object type and message
+  req.flash("success", "Logged in Successfully");
+  // abov is flash msg
   return res.redirect("/");
 };
 
@@ -136,6 +139,9 @@ module.exports.destroySession = function (req, res) {
     if (err) {
       return next(err);
     }
+    // setting up flash object's type and message
+    req.flash("success", "You have logged out");
+    // abov is flash msg
     return res.redirect("/");
   });
 };

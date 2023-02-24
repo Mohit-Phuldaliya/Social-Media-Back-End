@@ -27,6 +27,23 @@ const passportLocal = require("./config/passport-local-strategy");
 const connectMongo = require("connect-mongo");
 const MongoStore = connectMongo(session);
 
+// Requiring SASS
+const sassMiddleware = require("node-sass-middleware");
+app.use(
+  sassMiddleware({
+    src: "./assets/scss",
+    dest: "./assets/css",
+    debug: true,
+    outputStyle: "extended",
+    prefix: "/css",
+  })
+);
+
+// Flash Messages
+const flash = require("connect-flash");
+// custom middleware for flash msges
+const customMware = require("./config/middleware");
+
 app.use(express.urlencoded()); // reading through the post request
 
 app.use(cookieParser()); // setting up the cookie parser
@@ -67,6 +84,11 @@ app.use(
 app.use(passport.initialize());
 app.use(passport.session()); //passport also helps in maintaining sessions
 // above also included in middleware for session cookie
+
+//flash messages setting up
+app.use(flash());
+// using middleware for flash msges
+app.use(customMware.setFlash);
 
 //set up the user uses
 app.use(passport.setAuthenticatedUser);

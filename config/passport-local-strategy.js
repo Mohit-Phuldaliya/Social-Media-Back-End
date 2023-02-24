@@ -11,19 +11,22 @@ passport.use(
     {
       // where we defining what is the usernameField it is a syntax
       usernameField: "email",
+      passReqToCallback: true, //this allows us to set the 1st argument as req, we use this for flash msg
     }, // in next part there is a function which uses three arguments email, password and done
     // done is my call back function which is reporting back to the passportjs
-    function (email, password, done) {
+    function (req, email, password, done) {
       // whenever passport is bieng called email and password are automatically being passed to it
       //find the user establish the identy
       User.findOne({ email: email }, function (err, user) {
         if (err) {
-          console.log("error in finding use --> Passport");
+          // console.log("error in finding use --> Passport");
+          req.flash("error", "error in finding user");
           return done(err);
         }
 
         if (!user || user.password != password) {
-          console.log("Invalid Username/Password");
+          // console.log("Invalid Username/Password");
+          req.flash("error", "Invalid Username/Password");
           return done(null, false);
         }
         // if user found
