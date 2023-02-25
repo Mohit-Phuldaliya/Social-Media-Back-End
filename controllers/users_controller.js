@@ -1,4 +1,6 @@
 const User = require("../models/user");
+const fs = require("fs");
+const path = require("path");
 
 // // ****** MANUAL AUTHENTICATION PROFILE PAGE RENDERING ****////
 // module.exports.profile = function (req, res) {
@@ -28,7 +30,10 @@ module.exports.profile = function (req, res) {
     });
   });
 };
-//profile update form
+//
+//PROFILE FORM UPDATE//
+/********** without Async Await **********/
+/*
 module.exports.update = function (req, res) {
   if (req.user.id == req.params.id) {
     // {name: req.body.name,email: req.body.email} == req.body
@@ -39,7 +44,49 @@ module.exports.update = function (req, res) {
     return res.status(401).send("Unauthorized");
   }
 };
+*/
+/********** with Async Await and flash message and saving avtar file  **********/
 
+module.exports.update = async function (req, res) {
+  if (req.user.id == req.params.id) {
+    try {
+      // finding the user
+      let user = await User.findByIdAndUpdate(req.params.id);
+      // calling this uploadedAvatar and passing req. to it so that we r able to read the request or the data from the multi part form
+      User.uploadedAvatar(req, res, function (err) {
+        if (err) {
+          console.log("***Multer Error:", err);
+        }
+        // console.log(req.file);
+        user.name = req.body.name;
+        user.email = req.body.email;
+
+        // if already file present then delete prev. and upload new one and if not then don't do any thing just upload
+        if (req.file) {
+          if (user.avatar) {
+            const avatarPath = path.join(__dirname, "..", user.avatar);
+            if (fs.existsSync(avatarPath)) {
+              fs.unlinkSync(avatarPath);
+            }
+          }
+          // this is saving the path of the uploaded file into the avatar field in the user
+          user.avatar = User.avatarPath + "/" + req.file.filename;
+        }
+        user.save();
+        return res.redirect("back");
+      });
+    } catch (error) {
+      req.flash("error", err);
+      return res.redirect("back");
+    }
+  } else {
+    req.flash("error", Unauthorized);
+    return res.status(401).send("Unauthorized");
+  }
+};
+//
+
+//
 // render the sign up page
 module.exports.signUp = function (req, res) {
   //making accesible sign-up page only when the user is Signed-OUT

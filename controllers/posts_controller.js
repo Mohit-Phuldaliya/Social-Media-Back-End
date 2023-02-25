@@ -71,6 +71,6 @@ module.exports.destroy = async function (req, res) {
   } catch (err) {
     // console.log("error in creating in post");
     req.flash("error", err);
-    return;
+    return res.redirect("back");
   }
 };

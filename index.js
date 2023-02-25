@@ -48,6 +48,10 @@ app.use(express.urlencoded()); // reading through the post request
 
 app.use(cookieParser()); // setting up the cookie parser
 
+// make the uploads path available to browser
+// directory of index.js joins with uploads which means which means SOCIAL BACK_END/uploads is available on this path(/uploads)
+app.use("/uploads", express.static(__dirname + "/uploads"));
+
 // setup the view engine
 app.set("view engine", "ejs");
 app.set("views", "./views");
