@@ -10,7 +10,7 @@ const User = require("../models/user");
 // while defining jwt strategy we need to have some options one:- encryption, encrypt using some key
 let opts = {
   // finding jwt from the header using the below code
-  jwtFromRequest: ExtractJWT.fromAuthHeaderAsBearerToken,
+  jwtFromRequest: ExtractJWT.fromAuthHeaderAsBearerToken(),
   secretOrKey: "phuldaliya", // this my encryption and decryption string every encryption goes through this and decryption happens bcz of this if i change it after generating token i will not be able to decrypt that token
 };
 
