@@ -22,10 +22,20 @@ module.exports.create = function (req, res) {
 /********** with Async Await **********/
 module.exports.create = async function (req, res) {
   try {
-    await Post.create({
+    let post = await Post.create({
       content: req.body.content,
       user: req.user._id,
     });
+    // checking that is the req is ajax request
+    // if (req.xhr) {
+    //   // we return json with a status
+    //   return res.status(200).json({
+    //     data: {
+    //       post: post,
+    //     },
+    //     Message: "Post Created !!",
+    //   });
+    // }
     req.flash("success", "Post published !");
     return res.redirect("back");
   } catch (err) {
