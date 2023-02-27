@@ -7,13 +7,15 @@ const path = require("path");
 
 let transporter = nodemailer.createTransport({
   service: "gmail",
+  // gmail's mailing server created this domain (smtp.gmail.com) when u need to send mails using smtp for us to interact with as a developer
   host: "smtp.gmail.com",
   port: 587, // 587 bcz we using TLS
   secure: false,
   // u have to establish the identity with which u will be sending that email bcz if u don't establish  that identity anyone could use gmail to send mail from anyone to anyone so that gmail tracks ur activity and if u spaming people and using in proper manner then they can block u
   auth: {
     user: "developerop2024@gmail.com",
-    pass: "@Developerop2024",
+    pass: "sgewwpijomrrnddj",
+    // pass: "@Developerop2024",
   },
 });
 
@@ -28,7 +30,7 @@ let renderTemplate = (data, relativePath) => {
     data,
     function (err, template) {
       if (err) {
-        console.log("error in rendering template");
+        console.log("error in rendering template", err);
         return;
       }
       mailHTML = template;
