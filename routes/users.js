@@ -1,4 +1,5 @@
 const express = require("express");
+const { Passport } = require("passport");
 const router = express.Router();
 
 // require passport
@@ -39,5 +40,21 @@ router.post(
 );
 
 router.get("/sign-out", usersController.destroySession);
+
+/**************/
+
+// creating routes for Passport-Google-Auth
+// /auht/google is given by passport so this would be /users/auth/google this is not the callback url
+router.get(
+  "/auth/google",
+  passport.authenticate("google", { scope: ["profile", "email"] })
+); // 1st agr = "google"( the startegy) and 2nd arg = scope is the information which we r looking to fetch one profile its an array of string and 2nd email its not part of a profile so if u want email u need to take permission for it
+
+// /auth/google/callback this is the url at which i recieves the data
+router.get(
+  "/auth/google/callback",
+  passport.authenticate("google", { failureRedirect: "/users/sign-in" }),
+  usersController.createSession
+);
 
 module.exports = router;
