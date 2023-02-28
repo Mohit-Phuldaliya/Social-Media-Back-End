@@ -11,7 +11,7 @@ exports.newComment = (comment) => {
   let htmlString = nodeMailer.renderTemplate(
     { comment: comment },
     "/comments/new_comment.ejs"
-  );
+  ); // sending comment as data and 2nd argument as relativePath to the nodemailer.js
 
   // .sendMail is predefined function
   nodeMailer.transporter.sendMail(
@@ -29,7 +29,7 @@ exports.newComment = (comment) => {
         return;
       }
 
-      console.log("Message sent", info);
+      // console.log("Message sent", info);
       return;
     }
   );
