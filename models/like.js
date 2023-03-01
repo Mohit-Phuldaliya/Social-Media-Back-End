@@ -11,10 +11,11 @@ const likeSchema = new mongoose.Schema(
     likeable: {
       type: mongoose.Schema.ObjectId,
       require: true,
-      // telling dynamic refrence // refPath decides which other property that is the type of object
+      // telling dynamic refrence // refPath decides which other property, that is the type of object
       refPath: "onModel",
     },
     // this field is used for defining the type of the liked object since this is a dynamic reference
+    // this onModel is going to be a property on like itself
     onModel: {
       type: String,
       required: true,
