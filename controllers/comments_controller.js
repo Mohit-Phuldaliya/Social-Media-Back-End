@@ -5,6 +5,8 @@ const commentMailer = require("../mailers/comments_mailer");
 const commentEmailWorker = require("../workers/comment_email_worker");
 const queue = require("../config/kue");
 
+const Like = require("../models/like");
+
 /****************** Without Async Await ******************/
 /*
 module.exports.create = function (req, res) {
@@ -102,6 +104,9 @@ module.exports.destroy = async function (req, res) {
 
     if (comment.user == req.user.id) {
       let postId = comment.post;
+
+      // CHANGE :: destroy the associated likes for this comment
+      await Like.deleteMany({ likeable: comment._id, onModel: "Comment" });
 
       comment.remove();
 

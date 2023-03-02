@@ -55,14 +55,18 @@ module.exports.home = async function (req, res) {
   //using try catch to handle error
   try {
     let posts = await Post.find({})
-      // .sort("-createdAt")
+      .sort("-createdAt")
       .populate("user")
       .populate({
         path: "comments",
         populate: {
           path: "user",
         },
-      });
+        populate: {
+          path: "likes",
+        },
+      })
+      .populate("likes");
     //the successful response stored in posts   // once this executed
 
     // then this will executed

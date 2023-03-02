@@ -115,7 +115,7 @@ module.exports.signIn = function (req, res) {
 module.exports.create = function (req, res) {
   // check wether password and confirm password are equal or not if not then redirect to signup page
   if (req.body.password != req.body.confirm_password) {
-    return req.redirect("back");
+    return res.redirect("back");
   }
 
   // try to find out the user id if it is exist then we does not create it and if it is does not exist then we create it
