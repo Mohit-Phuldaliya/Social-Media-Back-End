@@ -73,8 +73,8 @@ module.exports.destroy = async function (req, res) {
     let post = await Post.findById(req.params.id);
     if (post.user == req.user.id) {
       // CHANGE :: delete the associated likes for the post and all its comments' likes too
-      await Like.deleteMany({ likeable: post, onModel: "Post" });
-      await Like.deleteMany({ _id: { $in: post.comments } });
+      await Like.deleteMany({ likeable: post, onModel: "Post" }); // deleting likes on this post
+      await Like.deleteMany({ _id: { $in: post.comments } }); // deleting likes on comments of that post
 
       post.remove();
 

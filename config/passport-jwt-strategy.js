@@ -19,7 +19,7 @@ let opts = {
 passport.use(
   // callback function reads data from jwt payload
   new JWTStrategy(opts, function (jwtPayLoad, done) {
-    // finding user based on the information of this jwtPayLoad
+    // finding user based on the information of this jwtPayLoad // i am going to storing the complete user information in the payload information
     User.findById(jwtPayLoad._id, function (err, user) {
       if (err) {
         console.log("Error in finding user from JWT");

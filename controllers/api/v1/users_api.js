@@ -5,7 +5,7 @@ module.exports.createSession = async function (req, res) {
   try {
     // finds the user
     let user = await User.findOne({ email: req.body.email });
-    // if have user not found
+    // if user is not found
     if (!user || user.password != req.body.password) {
       // error code 422 = invalid input by the user
       return res.json(422, {
